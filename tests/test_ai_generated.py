@@ -1,14 +1,40 @@
-# AI-generated test scenarios
+import pytest
+from app.auth import login
+
 # Functional Requirement: User must be able to log in with email and password.
 
-# - Positive Test Scenarios:
-#   - User successfully logs in with correct email and password.
-#   - User logs in with correct email but incorrect password and receives an error message.
-#   - User logs in with correct email but leaves password field blank and receives an error message.
-# 
-# - Negative Test Scenarios:
-#   - User tries to log in with an incorrect email and password combination and receives an error message.
-#   - User tries to log in with an email that is not registered in the system and receives an error message.
-# 
-# - Edge-Case Scenario:
-#   - User tries to log in with a very long email and password combination to test the system's handling of input length limits.
+# --- Positive scenarios ---
+def test_ai_pos_1_valid_user():
+    result = login(email='alice@example.com', password='p@ss')
+    assert result is True
+
+def test_ai_pos_2_valid_user_upper():
+    result = login(email='ALICE@EXAMPLE.COM', password='p@ss')
+    assert result is True
+
+def test_ai_pos_3_valid_user_space():
+    result = login(email=' alice@example.com ', password=' p@ss ')
+    assert result is True
+
+# --- Negative scenarios ---
+def test_ai_neg_1_invalid_email():
+    result = login(email='bob@example.com', password='p@ss')
+    assert result is False
+
+def test_ai_neg_2_invalid_password():
+    result = login(email='alice@example.com', password='wrong')
+    assert result is False
+
+def test_ai_neg_3_empty_credentials():
+    result = login(email='', password='')
+    assert result is False
+
+# --- Edge-case scenarios ---
+def test_ai_edge_1_email_missing_at():
+    result = login(email='aliceexample.com', password='p@ss')
+    assert result is False
+
+def test_ai_edge_2_password_empty():
+    result = login(email='alice@example.com', password='')
+    assert result is False
+
