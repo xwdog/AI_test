@@ -1,1 +1,1 @@
-User must be able to log in with email and password.
+System must allow multiple registered users (Alice, Bob, Carol) to log in with their email + password.

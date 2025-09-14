@@ -1,17 +1,14 @@
 # app/auth.py
-# Store emails in lowercase (canonical form)
-USERS = {"alice@example.com": "p@ss"}
+USERS = {
+    "alice@example.com": "p@ss",
+    "bob@example.com": "hunter2",  # new user
+    "carol@example.com": "letmein"  # another user
+}
 
 def login(email: str, password: str) -> bool:
-    # Guard against None
-    if email is None or password is None:
-        return False
+    # normalize email & password
+    email = email.strip().lower()
+    password = password.strip()
+    return USERS.get(email) == password
 
-    # Normalize inputs:
-    # - Emails are case-insensitive and users may add spaces
-    # - Passwords are case-sensitive but may have accidental spaces
-    email_norm = email.strip().lower()
-    password_norm = password.strip()
-
-    return USERS.get(email_norm) == password_norm
 
